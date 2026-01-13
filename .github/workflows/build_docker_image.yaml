@@ -2,6 +2,11 @@ name: Build Spark Notebook Image
 
 on:
   workflow_call:
+    inputs:
+      free_disk_space:
+        description: 'Free disk space before build (adds ~1-2 min, useful for large images)'
+        type: boolean
+        default: false
   workflow_dispatch:
   push:
     branches: [ "main", "master", "develop" ]
@@ -42,7 +47,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Free Disk Space (Ubuntu)
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ inputs.free_disk_space || (github.event_name == 'release' && github.event.action == 'published') || github.ref_type == 'tag' }}
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: false
