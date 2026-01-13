@@ -1,4 +1,4 @@
-name: Build and push docker image
+name: Build Spark Notebook Image
 
 on:
   workflow_call:
@@ -51,6 +51,12 @@ jobs:
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Build and push Docker image
         id: build-and-push
@@ -60,5 +66,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ (github.event_name == 'release' && github.event.action == 'published') && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
-          sbom: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          # Build for both Intel (amd64) and Apple Silicon (arm64) Macs
+          # Pull requests only build amd64 for faster CI
+          platforms: ${{ github.event_name == 'pull_request' && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
