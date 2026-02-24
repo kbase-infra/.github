@@ -2,7 +2,7 @@
 * [build_publish_scan.yaml](build_publish_scan.yaml)
 * [two_step_build_publish_scan.yaml](two_step_build_publish_scan.yaml)
 
-A GitHub Actions workflow template that you can install across this org, that will build a Docker image, pushes it to GitHub Container Registry (ghcr.io), and scans it for vulnerabilities with trivy.
+A GitHub Actions workflow template that you can install across this org, that will build a Docker image, push it to GitHub Container Registry (ghcr.io), and scan it for vulnerabilities with trivy.
 
 ## Installation
 Click on "actions" -> new workflow -> choose the workflow
