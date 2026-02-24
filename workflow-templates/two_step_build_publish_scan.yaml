@@ -65,7 +65,6 @@ jobs:
         with:
           context: .
           push: true
-          load: ${{ !(github.event_name == 'release' && github.event.action == 'published') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ github.event_name == 'release' && github.event.action == 'published' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
