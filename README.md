@@ -52,7 +52,7 @@ Since this is a template you own, the expected flow is to edit the file directly
 
 If you modify any workflow template file, you must update the version as part of your PR:
 
-1. Bump the `# version_YYYY_MM_DD` line at the top of the changed `.yaml` file
+1. Bump the `#vYYYY.MM.DD` line at the top of the changed `.yaml` file
 2. Update the version text in the corresponding `.properties.json` so it reflects in the Actions UI
 
 This allows users to compare the version in their installed copy against the current one in this repo.
