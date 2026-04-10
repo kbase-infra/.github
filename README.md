@@ -42,11 +42,13 @@ On non-release builds, a vulnerability report is written to the GitHub Actions j
 
 ## Runtime Input
 
-When triggering manually via `workflow_dispatch`, one input is available:
+When triggering manually via `workflow_dispatch`, the **(Customizable)** templates expose one input:
 
 | Input | Description | Default |
 |---|---|---|
 | `free_disk_space` | Frees disk space before the build (~1-2 min overhead). Useful for large images. | `false` |
+
+The **(Managed)** templates support `workflow_dispatch` for manual re-runs but expose no inputs.
 
 ## Customization
 
