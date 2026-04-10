@@ -61,7 +61,7 @@ jobs:
           sbom: ${{ github.event_name == 'release' && github.event.action == 'published' }}
       - name: Run Trivy vulnerability scanner
         if: github.event_name != 'release'
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
           format: 'json'
