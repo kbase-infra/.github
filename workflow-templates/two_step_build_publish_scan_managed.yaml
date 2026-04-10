@@ -9,4 +9,6 @@ on:
 jobs:
   two-step-build-publish-scan:
     uses: BERDataLakehouse/.github/.github/workflows/two_step_build_publish_scan.yaml@main
-    secrets: inherit
+    permissions:
+      contents: read
+      packages: write

@@ -9,4 +9,6 @@ on:
 jobs:
   build-publish-scan:
     uses: BERDataLakehouse/.github/.github/workflows/build_publish_scan.yaml@main
-    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
