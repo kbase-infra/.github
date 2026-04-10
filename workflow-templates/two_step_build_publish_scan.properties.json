@@ -1,6 +1,6 @@
 {
     "name": "Two Step Build, Publish and Scan (Customizable) v2026.04.10",
-    "description": "Build ghcr.io image and scan with Trivy. Multi-architecture on release.  Last updated 2026-04-10.",
+    "description": "Build ghcr.io image and scan with Trivy on non-release builds. Multi-architecture on release. Last updated 2026-04-10.",
     "iconName": "docker",
     "categories": [
         "Deployment",
