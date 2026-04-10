@@ -72,7 +72,7 @@ jobs:
         run: |
           set -o pipefail
           echo "## Vulnerability Summary" | tee -a $GITHUB_STEP_SUMMARY
-          jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
+          jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | sort_by(.Severity) | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
           echo "" | tee -a $GITHUB_STEP_SUMMARY
           echo "To see full details, run: trivy image ${{ fromJSON(steps.meta.outputs.json).tags[0] }}" | tee -a $GITHUB_STEP_SUMMARY
           if jq -e '.Results[]? | select(.Vulnerabilities) | .Vulnerabilities[] | select(.Severity == "CRITICAL")' trivy-results.json > /dev/null; then
