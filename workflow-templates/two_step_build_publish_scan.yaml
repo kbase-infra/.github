@@ -1,6 +1,6 @@
 #v2026.04.10
 # Supports multiplatform (amd64+arm64) on release, single platform otherwise. Max image size ~14GB.
-name: Two step build publish and scan docker image
+name: Two Step Build, Publish and Scan (Customizable)
 
 on:
   workflow_dispatch:
@@ -30,10 +30,10 @@ jobs:
       image-tag: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
 
       - name: Free Disk Space (Ubuntu)
         if: ${{ inputs.free_disk_space || (github.event_name == 'release' && github.event.action == 'published') }}
@@ -48,7 +48,7 @@ jobs:
           swap-storage: true
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -56,12 +56,12 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         with:
           context: .
           push: true
@@ -79,7 +79,7 @@ jobs:
       packages: read
     steps:
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -99,8 +99,9 @@ jobs:
       - name: Display vulnerability summary and fail on CRITICAL
         if: always()
         run: |
+          set -o pipefail
           echo "## Vulnerability Summary" | tee -a $GITHUB_STEP_SUMMARY
-          jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
+          jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | sort_by(.Severity) | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
           echo "" | tee -a $GITHUB_STEP_SUMMARY
           echo "To see full details, run: trivy image ${{ needs.build-push.outputs.image-tag }}" | tee -a $GITHUB_STEP_SUMMARY
 
