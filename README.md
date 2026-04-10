@@ -1,6 +1,17 @@
 # Build Publish and Scan Workflow Templates
-* [build_publish_scan.yaml](build_publish_scan.yaml)
-* [two_step_build_publish_scan.yaml](two_step_build_publish_scan.yaml)
+
+Four templates are available. Pick one:
+
+| Template | File | Best for |
+|---|---|---|
+| Build, Publish and Scan (Customizable) | [build_publish_scan.yaml](workflow-templates/build_publish_scan.yaml) | Teams that want to tweak branches, platforms, failure thresholds, etc. |
+| Two Step Build, Publish and Scan (Customizable) | [two_step_build_publish_scan.yaml](workflow-templates/two_step_build_publish_scan.yaml) | Same as above but scan runs as a separate job |
+| Build, Publish and Scan (Managed) | [build_publish_scan_managed.yaml](workflow-templates/build_publish_scan_managed.yaml) | Teams that want zero maintenance — updates automatically from upstream |
+| Two Step Build, Publish and Scan (Managed) | [two_step_build_publish_scan_managed.yaml](workflow-templates/two_step_build_publish_scan_managed.yaml) | Same as above but scan runs as a separate job |
+
+**Customizable** templates are copied into your repo. You own the file and can edit it freely, but you are responsible for pulling in future updates manually.
+
+**Managed** templates are thin wrappers that call a reusable workflow hosted in this repo. They cannot be customized, but they automatically pick up any updates made to `BERDataLakehouse/.github` — no action required on your part.
 
 A GitHub Actions workflow template that you can install across this org, that will build a Docker image, push it to GitHub Container Registry (ghcr.io), and scan it for vulnerabilities with trivy.
 
@@ -38,6 +49,8 @@ When triggering manually via `workflow_dispatch`, one input is available:
 | `free_disk_space` | Frees disk space before the build (~1-2 min overhead). Useful for large images. | `false` |
 
 ## Customization
+
+> This section applies to the **(Customizable)** templates only. Managed templates cannot be customized.
 
 Since this is a template you own, the expected flow is to edit the file directly after installing it. Common things to adjust:
 

@@ -1,0 +1,12 @@
+name: Two Step Build, Publish and Scan (Managed)
+on:
+  push:
+    branches: ["main", "master", "develop"]
+  pull_request:
+    branches: ["main", "master", "develop"]
+  release:
+    types: [published]
+jobs:
+  two-step-build-publish-scan:
+    uses: BERDataLakehouse/.github/.github/workflows/two_step_build_publish_scan.yaml@main
+    secrets: inherit
