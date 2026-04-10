@@ -1,4 +1,4 @@
-#v2026.02.23
+#v2026.04.10
 # Supports multiplatform (amd64+arm64) on release, single platform otherwise. Max image size ~14GB.
 name: Build and Push Docker Image
 on:
