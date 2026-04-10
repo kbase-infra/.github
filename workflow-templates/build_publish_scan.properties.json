@@ -1,5 +1,5 @@
 {
-    "name": "Build, Publish and Scan v2026.02.23",
+    "name": "Build, Publish and Scan v2026.04.10",
     "description": "Build ghcr.io image and scan with Trivy. Multi-architecture on release.  Last updated 2026-02-23.",
     "iconName": "docker",
     "categories": [
