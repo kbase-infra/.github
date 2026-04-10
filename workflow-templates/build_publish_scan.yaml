@@ -70,6 +70,7 @@ jobs:
       - name: Display vulnerability summary and fail on CRITICAL
         if: always() && github.event_name != 'release'
         run: |
+          set -o pipefail
           echo "## Vulnerability Summary" | tee -a $GITHUB_STEP_SUMMARY
           jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
           echo "" | tee -a $GITHUB_STEP_SUMMARY
