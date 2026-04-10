@@ -42,7 +42,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Free Disk Space (Ubuntu)
-        if: ${{ (github.event_name == 'release' && github.event.action == 'published') || github.ref_type == 'tag' }}
+        if: ${{ (github.ref_type == 'tag') || github.ref_type == 'tag' }}
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: false
@@ -55,5 +55,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ github.event_name == 'release' && github.event.action == 'published' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
-          sbom: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          platforms: ${{ github.ref_type == 'tag' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
+          sbom: ${{ github.ref_type == 'tag' }}
