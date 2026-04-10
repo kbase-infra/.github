@@ -18,7 +18,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Free Disk Space (Ubuntu)
-        if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+        if: ${{ github.ref_type == 'tag' }}
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
         with:
           tool-cache: false
@@ -46,10 +46,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ github.event_name == 'release' && github.event.action == 'published' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
-          sbom: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          platforms: ${{ github.ref_type == 'tag' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
+          sbom: ${{ github.ref_type == 'tag' }}
       - name: Run Trivy vulnerability scanner
-        if: github.event_name != 'release'
+        if: github.ref_type != 'tag'
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
@@ -57,8 +57,9 @@ jobs:
           output: 'trivy-results.json'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN'
       - name: Display vulnerability summary and fail on CRITICAL
-        if: always() && github.event_name != 'release'
+        if: always() && github.ref_type != 'tag'
         run: |
+          set -o pipefail
           echo "## Vulnerability Summary" | tee -a $GITHUB_STEP_SUMMARY
           jq -r '.Results[]? | select(.Vulnerabilities) | "### \(.Target) (\(.Type))", (.Vulnerabilities | group_by(.Severity) | map("\(.[0].Severity): \(length)") | .[])' trivy-results.json | tee -a $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" | tee -a $GITHUB_STEP_SUMMARY
           echo "" | tee -a $GITHUB_STEP_SUMMARY
