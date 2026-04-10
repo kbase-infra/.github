@@ -42,7 +42,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Free Disk Space (Ubuntu)
-        if: ${{ (github.ref_type == 'tag') || github.ref_type == 'tag' }}
+        if: ${{ github.ref_type == 'tag' }}
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: false
