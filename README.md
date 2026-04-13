@@ -16,7 +16,8 @@ Four templates are available. Pick one:
 A GitHub Actions workflow template that you can install across this org, that will build a Docker image, push it to GitHub Container Registry (ghcr.io), and scan it for vulnerabilities with trivy.
 
 ## Installation
-Click on "actions" -> new workflow -> choose the workflow
+* Click on "actions" -> new workflow -> choose the workflow
+* Click on the repo package -> Package settings -> Manage Actions access -> Give the repo `Write` permissions
 
 ## Triggers
 
