@@ -25,7 +25,7 @@ jobs:
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
 
       - name: Free Disk Space (Ubuntu)
-        if: ${{ github.ref_type == 'tag' }}
+        if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
         with:
           tool-cache: false
@@ -56,12 +56,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ github.ref_type == 'tag' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
-          sbom: ${{ github.ref_type == 'tag' }}
+          platforms: ${{ github.event_name == 'release' && github.event.action == 'published' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
+          sbom: ${{ github.event_name == 'release' && github.event.action == 'published' }}
 
   scan:
     needs: build-push
-    if: github.ref_type != 'tag'
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     permissions:
       contents: read
