@@ -9,7 +9,7 @@ on:
     types: [published]
 jobs:
   two-step-build-publish-scan:
-    uses: BERDataLakehouse/.github/.github/workflows/two_step_build_publish_scan.yaml@main
+    uses: kbase-infra/.github/.github/workflows/two_step_build_publish_scan.yaml@main
     permissions:
       contents: read
       packages: write
