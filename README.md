@@ -11,7 +11,7 @@ Four templates are available. Pick one:
 
 **Customizable** templates are copied into your repo. You own the file and can edit it freely, but you are responsible for pulling in future updates manually.
 
-**Managed** templates are thin wrappers that call a reusable workflow hosted in this repo. They cannot be customized, but they automatically pick up any updates made to `BERDataLakehouse/.github` — no action required on your part.
+**Managed** templates are thin wrappers that call a reusable workflow hosted in this repo. They cannot be customized, but they automatically pick up any updates made to `kbase-infra/.github` — no action required on your part.
 
 A GitHub Actions workflow template that you can install across this org, that will build a Docker image, push it to GitHub Container Registry (ghcr.io), and scan it for vulnerabilities with trivy.
 

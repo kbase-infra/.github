@@ -1,6 +1,6 @@
 {
     "name": "Build, Publish and Scan (Managed)",
-    "description": "Build ghcr.io image and scan with Trivy. Managed by upstream — updates automatically when BERDataLakehouse/.github changes.",
+    "description": "Build ghcr.io image and scan with Trivy. Managed by upstream — updates automatically when kbase-infra/.github changes.",
     "iconName": "docker",
     "categories": [
         "Deployment",

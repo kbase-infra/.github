@@ -1,6 +1,6 @@
 {
     "name": "Two Step Build, Publish and Scan (Managed)",
-    "description": "Two-step build, publish ghcr.io image, and scan with Trivy. Managed by upstream — updates automatically when BERDataLakehouse/.github changes.",
+    "description": "Two-step build, publish ghcr.io image, and scan with Trivy. Managed by upstream — updates automatically when kbase-infra/.github changes.",
     "iconName": "docker",
     "categories": [
         "Deployment",
